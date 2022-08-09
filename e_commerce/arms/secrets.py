@@ -1,0 +1,2 @@
+DJANGO_SECRET_KEY = "cocj"
+JWT_SECRET_KEY = "cocjwt"

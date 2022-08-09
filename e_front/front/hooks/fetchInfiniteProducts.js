@@ -1,0 +1,27 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getSession } from "next-auth/react";
+import fetcher from "../utils/fetcher";
+
+const fetchInfiniteProducts = async ({
+  pageParam = 'http://127.0.0.1:8000/api/products/',
+}) => {
+  const session = await getSession()
+  console.log(session)
+  const request = await fetch(pageParam, 
+    {headers: { 'Authorization': `Bearer ${session.accessToken}` },}
+  );
+  const {results, next} = await request.json();
+  return {response: results, nextPage: next};
+};
+
+function useInfiniteProducts () {
+  return useInfiniteQuery(
+    ['products'],
+    ({ pageParam }) => fetchInfiniteProducts({ pageParam }),
+    {
+      getNextPageParam: (lastPage) => lastPage.nextPage    }
+  );
+}
+
+
+export { fetchInfiniteProducts, useInfiniteProducts}
