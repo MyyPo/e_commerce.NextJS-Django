@@ -1,0 +1,6 @@
+.vscode/
+/e_commerce/db.sqlite3
+/e_commerce/env
+/e_commerce/__pycache__
+/e_commerce/orders/__pycache__
+/e_commerce/products/__pycache__

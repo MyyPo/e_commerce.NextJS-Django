@@ -1,7 +1,6 @@
 from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
@@ -9,40 +8,27 @@ from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 
-from .serializers import CustomerSerializer
+from authemail.views import Signup
+
+from .serializers import CustomerSerializer, MySignupSerializer, MyTokenObtainPairSerializer
+
+
+class MySignup(Signup):
+    serializer_class = MySignupSerializer
 
 
 class GoogleLoginView(SocialLoginView):
-    authentication_classes = []
     adapter_class = GoogleOAuth2Adapter
     callback_url = 'http://localhost:3000'
     client_class = OAuth2Client
   
- 
-    
-
 class FacebookLoginView(SocialLoginView):
     adapter_class = FacebookOAuth2Adapter
     callback_url = 'http://localhost:3000'
     client_class = OAuth2Client
-   
-
-
-
-class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    @classmethod
-    def get_token(cls, user):
-        token = super().get_token(user)
-
-        # Add custom claims
-        token['email'] = user.email
-
-        return token
-
+           
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
-
 
 class HelloWorldView(APIView):
     permission_classes = (permissions.IsAuthenticated,)

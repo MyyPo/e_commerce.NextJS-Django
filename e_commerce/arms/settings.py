@@ -52,13 +52,13 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     #auth
-    'dj_rest_auth',
-    'dj_rest_auth.registration',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
+    'authemail',
 
 
 
@@ -67,6 +67,11 @@ INSTALLED_APPS = [
     'authentication',
     'orders',
     
+]
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
@@ -91,7 +96,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 SOCIALACCOUNT_EMAIL_VERIFICATION = 'none'
-SOCIALACCOUNT_EMAIL_REQUIRED = False
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
@@ -101,8 +107,7 @@ ACCOUNT_USERNAME_REQUIRED = False
 
 SITE_ID = 1
 REST_USE_JWT = True
-# JWT_AUTH_COOKIE = 'access-token'
-# JWT_AUTH_REFRESH_COOKIE = 'refresh-token'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -238,3 +243,16 @@ AUTH_USER_MODEL = "authentication.Customer"
 REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'authentication.serializers.CustomerSerializer'
 }
+
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_FROM = 'myypo@outlook.com'
+EMAIL_BCC = 'myypo@outlook.com'
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'myypo@outlook.com'
+EMAIL_HOST_PASSWORD = 'DC3dkRRzk7X8Hz5'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

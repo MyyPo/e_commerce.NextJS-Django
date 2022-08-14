@@ -2,7 +2,14 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
     TokenVerifyView,
 )
-from .views import CustomerCreate, FacebookLoginView, HelloWorldView, MyTokenObtainPairView, GoogleLoginView
+
+from authemail.views import (
+    SignupVerify,
+    PasswordReset,
+    PasswordResetVerify,
+)
+
+from .views import CustomerCreate, FacebookLoginView, HelloWorldView, MySignup, MyTokenObtainPairView, GoogleLoginView
 from django.urls import path
 
 
@@ -14,5 +21,8 @@ urlpatterns = [
     path('hello/', HelloWorldView.as_view(), name='hello_world'),
     path('google/', GoogleLoginView.as_view(), name='google'),
     path('facebook/', FacebookLoginView.as_view(), name='facebook'),
-
+    path('signup/', MySignup.as_view(), name='email_signup'),
+    path('signup/verify/', SignupVerify.as_view(), name='signup_verify'),
+    path('reset-password/', PasswordReset.as_view(), name='reset_password'),
+    path('verify-reset-password/', PasswordResetVerify.as_view(), name='verify_reset_password'),
 ]
