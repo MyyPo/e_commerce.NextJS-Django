@@ -12,19 +12,47 @@ export default function Signup() {
   const [password2, setPassword2] = useState("");
 
   const [submitted, setSubmitted] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
+  const [error_email, setErrorEmail] = useState(false);
+  const [error_match_password, setErrorMatchPassword] = useState(false);
+  const [error_invalid_password, setErrorInvalidPassword] = useState(false);
 
-  const errorMessage = () => {
+  const errorEmailMessage = () => {
     return (
       <div
-        className=""
+        className="text-sm text-center"
         style={{
-          display: errors ? "" : "none",
+          visibility: error_email || errors ? "" : "hidden",
         }}
       >
-        {errors.map((error, i) => (
-          <p key={i}>{error}</p>
-        ))}
+        Please, provide a valid email address
+        <br />
+        <p className="text-red-700">{errors}</p>
+      </div>
+    );
+  };
+  const errorMatchPasswordMessage = () => {
+    return (
+      <div
+        className="text-sm text-center"
+        style={{
+          visibility: error_match_password ? "" : "hidden",
+        }}
+      >
+        Provided passwords should match
+      </div>
+    );
+  };
+  const errorInvalidPasswordMessage = () => {
+    return (
+      <div
+        className="text-sm text-center"
+        style={{
+          visibility: error_invalid_password ? "" : "hidden",
+        }}
+      >
+        Passwords should be at least 6 characters long and contain both letters
+        and numbers
       </div>
     );
   };
@@ -38,7 +66,7 @@ export default function Signup() {
         }}
       >
         <div className="mt-4">
-          <Image src="/email.svg" alt="email_icon" width="64" height="64" />
+          <Image src="/email.svg" alt="Email icon" width="64" height="64" />
         </div>
         <p className="self-auto mx-4">
           Please, verify your account by following the link sent to
@@ -50,26 +78,29 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors([]);
+    setErrors("");
+    setErrorEmail(false);
+    setErrorInvalidPassword(false);
+    setErrorMatchPassword(false);
     const formIsValid = true;
     if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-      setErrors((errors) => errors.concat("Please, enter a valid email."));
+      setErrorEmail(true);
       formIsValid = false;
     }
     if (password1 != password2) {
-      setErrors((errors) => errors.concat("Passwords should match."));
+      setErrorMatchPassword(true);
       formIsValid = false;
     }
-    if (!/^[A-Za-z]\w{7,14}$/.test(password1)) {
-      setErrors((errors) =>
-        errors.concat(
-          "Password must contain between 7 to 16 characters numeric digits, underscore and first character must be a letter."
-        )
-      );
+    if (
+      !/^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/.test(
+        password1
+      )
+    ) {
+      setErrorInvalidPassword(true);
       formIsValid = false;
     }
     if (formIsValid) {
-      const response = await fetch("http://127.0.0.1:8000/api/signup/1", {
+      const response = await fetch("http://127.0.0.1:8000/api/signup/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -81,21 +112,20 @@ export default function Signup() {
           last_name,
         }),
       });
-      setSubmitted(true);
       let data = await response.json();
       if (response.ok) {
         setSubmitted(true);
       } else if (data.detail) {
         setEmail("");
-        setErrors((errors) => errors.concat(data.detail));
+        setErrors(data.detail);
       }
     }
   };
 
   return (
-    <div className="">
+    <>
       <form
-        className="absolute p-6 -translate-x-1/2 -translate-y-1/2 bg-white border-2 rounded-lg shadow-lg w-96 top-1/2 left-1/2"
+        className="absolute w-9/12 p-6 -translate-x-1/2 -translate-y-1/2 bg-white border-2 rounded-lg shadow-lg md:w-2/3 lg:w-1/3 top-1/2 left-1/2"
         onSubmit={handleSubmit}
         style={{
           display: submitted ? "none" : "",
@@ -121,42 +151,50 @@ export default function Signup() {
             onChange={(e) => setLastName(e.target.value)}
           />
         </div>
-        <input
-          className="mb-8 input"
-          placeholder="Email"
-          type="text"
-          autoComplete="off"
-          value={email}
-          required
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          className="mb-3 input"
-          placeholder="Password"
-          type="password"
-          value={password1}
-          required
-          onChange={(e) => setPassword1(e.target.value)}
-        />
-        <input
-          className="mb-8 input"
-          placeholder="Repeat password"
-          type="password"
-          value={password2}
-          required
-          onChange={(e) => setPassword2(e.target.value)}
-        />
-        <div className="text-center">{errorMessage()}</div>
-        <button
-          type="sumbit"
-          className="block w-full py-4 text-base font-normal bg-orange-200 rounded-lg "
-        >
-          Sign up
-        </button>
+        <div className="grid grid-cols-1 gap-2">
+          <input
+            className={`input ${error_email || errors ? "border-red-700" : ""}`}
+            placeholder="Email"
+            type="text"
+            autoComplete="off"
+            value={email}
+            required
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          {errorEmailMessage()}
+          <input
+            className={`input ${
+              error_invalid_password ? "border-red-700" : ""
+            }`}
+            placeholder="Password"
+            type="password"
+            value={password1}
+            required
+            onChange={(e) => setPassword1(e.target.value)}
+          />
+          {errorInvalidPasswordMessage()}
+
+          <input
+            className={`input ${error_match_password ? "border-red-700" : ""}`}
+            placeholder="Repeat password"
+            type="password"
+            value={password2}
+            required
+            onChange={(e) => setPassword2(e.target.value)}
+          />
+          {errorMatchPasswordMessage()}
+
+          <button
+            type="sumbit"
+            className="block w-full py-4 text-base font-normal bg-orange-200 rounded-lg "
+          >
+            Sign up
+          </button>
+        </div>
       </form>
       <div className="flex flex-col items-center justify-center h-96">
         {successMessage()}
       </div>
-    </div>
+    </>
   );
 }

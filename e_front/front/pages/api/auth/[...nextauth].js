@@ -21,7 +21,7 @@ export async function refreshAccessToken(token) {
       ...token,
       accessToken: refreshedTokens.access,
       refreshToken: refreshedTokens.refresh ?? token.refreshToken,
-      accessExpires: Date.now() + 1000 * 50,
+      accessExpires: Date.now() + 1000 * 60 * 10,
     };
   } catch (error) {
     return {
@@ -95,7 +95,7 @@ const nextAuthOptions = (req, res) => {
               token.refreshToken = data.refresh_token;
               token.email = data.user.email;
               token.first_name = data.user.first_name;
-              token.accessExpires = Date.now() + 1000 * 50;
+              token.accessExpires = Date.now() + 1000 * 60 * 10;
               console.log("funtion login");
               return token;
             } catch (error) {
@@ -134,7 +134,7 @@ const nextAuthOptions = (req, res) => {
             token.refreshToken = user.refresh;
             token.email = user.email;
             token.first_name = user.first_name;
-            token.accessExpires = Date.now() + 1000 * 50;
+            token.accessExpires = Date.now() + 1000 * 60 * 10;
             return token;
           }
         }
