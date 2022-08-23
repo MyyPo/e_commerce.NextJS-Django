@@ -1,12 +1,9 @@
-import { getSession } from "next-auth/react";
-
 class HTTPError extends Error {}
 
 const fetchProduct = async (slug) => {
-  const session = await getSession();
-  const request = await fetch(`http://127.0.0.1:8000/api/products/${slug}/`, {
-    headers: { Authorization: `Bearer ${session.accessToken}` },
-  });
+  const request = await fetch(
+    `http://192.168.0.105:8000/api/products/${slug}/`
+  );
   if (!request.ok) {
     throw new HTTPError(`Fetch error: ${request.statusText}`);
   }

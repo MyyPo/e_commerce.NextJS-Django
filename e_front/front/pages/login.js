@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import useAuth from "../hooks/useAuth";
 import { useRouter } from "next/router";
 
 export function Login() {

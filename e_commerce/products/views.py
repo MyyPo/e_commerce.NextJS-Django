@@ -7,6 +7,7 @@ from django.core.cache import cache
 
 from .models import Product
 from authentication.mixins import StaffOrReadOnlyMixin
+from authentication.permissions import IsStaffOrReadOnly
 
 
 RANDOM_EXPERIENCES = 1
@@ -14,6 +15,7 @@ RANDOM_EXPERIENCES = 1
 class ProductListAPIViews(
     StaffOrReadOnlyMixin,
     generics.ListAPIView):
+    # permission_classes = (IsStaffOrReadOnly),
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['^title']
@@ -36,6 +38,7 @@ product_list_create_view = ProductListAPIViews.as_view()
 class ProductDetailAPIView(
     StaffOrReadOnlyMixin,
     generics.RetrieveAPIView):
+    # permission_classes = (IsStaffOrReadOnly),
     queryset = Product.objects.all()
     lookup_field = 'slug'
     serializer_class = ProductSerializer
@@ -47,6 +50,7 @@ product_detail_view = ProductDetailAPIView.as_view()
 class ProductListGetSlugsAPIView(
     StaffOrReadOnlyMixin,
     generics.ListCreateAPIView):
+    # permission_classes = (IsStaffOrReadOnly),
     pagination_class = StandardResultsSetPagination
     queryset = Product.objects.all()
     serializer_class = ProductSlugSerializer

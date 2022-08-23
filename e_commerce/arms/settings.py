@@ -28,7 +28,7 @@ SECRET_KEY = DJANGO_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.0.105"]
 
 STRIPE_SECRET_KEY = 'sk_test_51LMUHkAm6CC86d7T8woEVtBL6AxpWHNSQwr2MI1KL6ybsRv2TEBvIenpUdl46cCCRjB0fvdZwEpZ2NHXs3dJZtTc00vtcB0mWS'
 
@@ -217,10 +217,10 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'PAGE_SIZE': 6,
 
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '1/second',
-        'user': '1/second'
-    }
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '1/second',
+    #     'user': '1/second'
+    # }
 
 }
 

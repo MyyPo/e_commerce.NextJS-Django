@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import React from "react";
 
 import { useThumbnail } from "../../hooks/fetchThumbnail";
-import React from "react";
+import Spinner from "../../components/Spinner";
 
 function Suggestions(props) {
   const { data, isLoading, isFetching } = useThumbnail();
@@ -10,12 +11,12 @@ function Suggestions(props) {
   return (
     <div className="w-full mt-2 border-4 rounded-md">
       <Link
-        className="absolute w-full"
+        className="absolute w-full h-full"
         href={`/product/${encodeURIComponent(props.suggestion.slug)}`}
       >
-        <div className="flex items-center w-auto h-12 gap-3 bg-gray-200 shadow-md justify-left">
+        <a className="flex items-center w-auto h-12 gap-3 bg-gray-200 shadow-md justify-left">
           {data?.get_image ? (
-            <div className="ml-3">
+            <div className="w-12 ml-3">
               <Image
                 className="rounded-lg"
                 width={44}
@@ -25,10 +26,12 @@ function Suggestions(props) {
               />
             </div>
           ) : (
-            <div className="w-5 h-5 ml-3 border-4 border-t-4 border-gray-300 rounded-full border-t-gray-600 animate-spin"></div>
+            <div className="w-12 ml-3">
+              <Spinner className="" />
+            </div>
           )}
           <p className="">{props.suggestion.title}</p>
-        </div>
+        </a>
       </Link>
     </div>
   );

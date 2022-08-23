@@ -24,7 +24,7 @@ export default function MyApp({ Component, pageProps }) {
       <AuthProvider>
         <SessionProvider
           session={pageProps.session}
-          refetchInterval={30}
+          refetchInterval={600}
           refetchOnWindowFocus={true}
         >
           <Hydrate state={pageProps.dehydratedState}>
@@ -33,7 +33,7 @@ export default function MyApp({ Component, pageProps }) {
           </Hydrate>
         </SessionProvider>
       </AuthProvider>
-      <ReactQueryDevtools />
+      {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>
   );
 }
