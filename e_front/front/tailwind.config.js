@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        "3xl": "23px 23px 46px rgba(0, 0, 0, 0.3)",
+      },
       animation: {
         disappear: "disappear 0.6s",
         appear: "appear 0.6s",

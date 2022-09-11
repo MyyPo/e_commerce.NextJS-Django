@@ -8,17 +8,20 @@ import {
 import { AuthProvider } from "../components/AuthContext";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SessionProvider } from "next-auth/react";
-import Header from "../components/Header/Header";
+import Layout from "../components/Layout";
+import { CartProvider } from "../components/ProductPage/CartProvider";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1,
-    },
-  },
-});
+// const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       retry: 1,
+//     },
+//   },
+// });
 
 export default function MyApp({ Component, pageProps }) {
+  const [queryClient] = React.useState(() => new QueryClient());
+
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
@@ -28,8 +31,9 @@ export default function MyApp({ Component, pageProps }) {
           refetchOnWindowFocus={true}
         >
           <Hydrate state={pageProps.dehydratedState}>
-            <Header />
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </Hydrate>
         </SessionProvider>
       </AuthProvider>

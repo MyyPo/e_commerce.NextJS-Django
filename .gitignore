@@ -5,3 +5,5 @@
 /e_commerce/orders/__pycache__
 /e_commerce/products/__pycache__
 e_front/front/components/Header/SearchBar.js
+/e_commerce/.env
+/e_commerce/arms/secrets.py

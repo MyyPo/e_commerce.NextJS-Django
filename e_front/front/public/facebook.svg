@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 16 16" fill="currentColor" class="bi bi-facebook" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="7.999" y1="-0.001" x2="7.999" y2="16.001" id="gradient-0" gradientTransform="matrix(0.849008, -0.528378, 0.529641, 0.851038, -2.594236, 5.266845)">
+      <stop offset="0" style="stop-color: rgb(46, 99, 255);"/>
+      <stop offset="0.652" style="stop-color: rgb(97, 204, 239);"/>
+      <stop offset="1" style="stop-color: rgba(121, 208, 255, 0.98);"/>
+    </linearGradient>
+    <linearGradient id="gradient-1" bx:pinned="true"/>
+  </defs>
+  <path d="M 16 8.049 C 16 3.603 12.418 -0.001 8 -0.001 C 3.58 0 -0.002 3.603 -0.002 8.05 C -0.002 12.067 2.924 15.397 6.748 16.001 L 6.748 10.376 L 4.718 10.376 L 4.718 8.05 L 6.75 8.05 L 6.75 6.275 C 6.655 4.807 7.945 3.144 9.772 3.144 C 10.648 3.144 11.563 3.301 11.563 3.301 L 11.563 5.281 L 10.554 5.281 C 9.561 5.281 9.251 5.902 9.251 6.539 L 9.251 8.049 L 11.469 8.049 L 11.115 10.375 L 9.25 10.375 L 9.25 16 C 13.074 15.396 16 12.066 16 8.049 Z" style="fill: url(#gradient-0); paint-order: fill;"/>
+</svg>

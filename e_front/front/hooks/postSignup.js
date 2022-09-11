@@ -1,6 +1,6 @@
 class HTTPError extends Error {}
 
-const postSignup = await fetch("http://192.168.0.105:8000/api/user/create/", {
+const postSignup = await fetch(process.env.NEXT_PUBLIC_CREATE_USER, {
   method: "POST",
   body: JSON.stringify({ foo: true }),
   headers: {

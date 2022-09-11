@@ -4,7 +4,7 @@ class HTTPError extends Error {}
 
 const fetchSlugs = async (req, res) => {
   const request = await fetch(
-    `http://192.168.0.105:8000/api/products/slugs/get/?page_size=1000`
+    process.env.NEXT_PUBLIC_BACKEND_SLUGS + "?page_size=1000"
   );
   if (!request.ok) {
     throw new HTTPError(`Fetch error: ${request.statusText}`);

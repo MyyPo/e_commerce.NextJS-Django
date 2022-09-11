@@ -5,7 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 
 export async function refreshAccessToken(token) {
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
+    const response = await fetch(process.env.BACKEND_TOKEN_REFRESH, {
       method: "POST",
       body: JSON.stringify({ refresh: token.refreshToken }),
       headers: {
@@ -54,7 +54,7 @@ const nextAuthOptions = (req, res) => {
         async authorize(credentials, req) {
           const { email, password } = credentials;
 
-          const response = await fetch("http://127.0.0.1:8000/api/token/", {
+          const response = await fetch(process.env.BACKEND_TOKEN_OBTAIN, {
             method: "POST",
             body: JSON.stringify({ email, password }),
 
@@ -85,17 +85,14 @@ const nextAuthOptions = (req, res) => {
           if (account.provider === "google") {
             const { access_token, id_token } = account;
             try {
-              const response = await fetch(
-                "http://127.0.0.1:8000/api/google/",
-                {
-                  method: "POST",
-                  body: JSON.stringify({ access_token, id_token }),
+              const response = await fetch(process.env.BACKEND_GOOGLE, {
+                method: "POST",
+                body: JSON.stringify({ access_token, id_token }),
 
-                  headers: {
-                    "content-type": "application/json",
-                  },
-                }
-              );
+                headers: {
+                  "content-type": "application/json",
+                },
+              });
               let data = await response.json();
               console.log(data);
               token.accessToken = data.access_token;
@@ -113,20 +110,16 @@ const nextAuthOptions = (req, res) => {
           if (account.provider === "facebook") {
             const { access_token, id_token } = account;
             try {
-              const response = await fetch(
-                "http://127.0.0.1:8000/api/facebook/",
-                {
-                  method: "POST",
-                  body: JSON.stringify({ access_token, id_token }),
+              const response = await fetch(process.env.BACKEND_FACEBOOK, {
+                method: "POST",
+                body: JSON.stringify({ access_token, id_token }),
 
-                  headers: {
-                    "content-type": "application/json",
-                  },
-                }
-              );
+                headers: {
+                  "content-type": "application/json",
+                },
+              });
               let data = await response.json();
               console.log(data);
-              // const { access_token, refresh_token } = data;
               token.accessToken = data.access_token;
               token.refreshToken = data.refresh_token;
               token.accessExpires = Date.now() + 1000 * 50;

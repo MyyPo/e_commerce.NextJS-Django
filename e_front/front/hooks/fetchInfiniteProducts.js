@@ -13,7 +13,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 //   return { response: results, nextPage: next };
 // };
 const fetchInfiniteProducts = async ({
-  pageParam = "http://192.168.0.105:8000/api/products/",
+  pageParam = process.env.NEXT_PUBLIC_PRODUCTS,
 }) => {
   const request = await fetch(pageParam);
   const { results, next } = await request.json();

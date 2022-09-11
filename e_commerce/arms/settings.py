@@ -11,26 +11,38 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 import datetime
+import environ
+import os
 from pathlib import Path
-from .secrets import DJANGO_SECRET_KEY, JWT_SECRET_KEY
+# from .secrets import DJANGO_SECRET_KEY, JWT_SECRET_KEY
+
+env = environ.Env(
+    # set casting, default value
+    # DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 #LOCALE_PATHS = (BASE_DIR + 'locale/' )
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJANGO_SECRET_KEY
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["192.168.0.105"]
 
-STRIPE_SECRET_KEY = 'sk_test_51LMUHkAm6CC86d7T8woEVtBL6AxpWHNSQwr2MI1KL6ybsRv2TEBvIenpUdl46cCCRjB0fvdZwEpZ2NHXs3dJZtTc00vtcB0mWS'
+STRIPE_SECRET_KEY = env('STRIPE_SECRET')
 
 
 # Application definition
@@ -215,7 +227,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'PAGE_SIZE': 6,
+    'PAGE_SIZE': 8,
 
     # 'DEFAULT_THROTTLE_RATES': {
     #     'anon': '1/second',
@@ -235,7 +247,7 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': JWT_SECRET_KEY,
+    'SIGNING_KEY': env('JWT_SECRET_KEY'),
 }
 
 AUTH_USER_MODEL = "authentication.Customer"
@@ -248,11 +260,11 @@ REST_AUTH_SERIALIZERS = {
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_FROM = 'myypo@outlook.com'
-EMAIL_BCC = 'myypo@outlook.com'
+EMAIL_FROM = env('EMAIL')
+EMAIL_BCC = env('EMAIL')
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'myypo@outlook.com'
-EMAIL_HOST_PASSWORD = 'DC3dkRRzk7X8Hz5'
+EMAIL_HOST_USER = env('EMAIL')
+EMAIL_HOST_PASSWORD = env('EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
