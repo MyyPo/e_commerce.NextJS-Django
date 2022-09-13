@@ -8,6 +8,7 @@ import Icon from "../../public/Icon.svg";
 import User from "../../public/user.svg";
 import Glass from "../../public/search.svg";
 import { SearchBar } from "./SearchBar";
+import SearchBarMobile from "./SearchBarMobile";
 import Spinner from "../Spinner";
 import SignIn from "./SignIn";
 import SignInPortal from "./SignInPortal";
@@ -109,7 +110,7 @@ export default function Header() {
                       <Glass className="stroke-white" />
                     </div>
                     <SignInPortal selector="#SignIn">
-                      <SearchBar
+                      <SearchBarMobile
                         searchWindow={searchWindow}
                         isBreakpoint={isBreakpoint}
                         setSearchWindow={setSearchWindow}

@@ -23,7 +23,7 @@ export default function Product() {
   if (isSuccess) {
     return (
       <div className="items-center md:flex ">
-        <ProductCarousel /> <ProductDescription slug={slug} />
+        <ProductCarousel /> <ProductDescription product={product} slug={slug} />
       </div>
     );
   }

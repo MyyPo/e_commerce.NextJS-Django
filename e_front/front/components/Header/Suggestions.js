@@ -11,8 +11,8 @@ function Suggestions(props) {
 
   return (
     <button
-      onClick={() => props.setSearchWindow(false)}
-      className="w-full mt-2 border-4 rounded-md md:-mt-1"
+      onClick={() => props.setSearchWindow && props.setSearchWindow(false)}
+      className="w-full mt-2 border-4 rounded-md md:mt-1"
     >
       <Link
         className="w-full h-full"

@@ -1,4 +1,5 @@
 class HTTPError extends Error {}
+import { useQuery } from "@tanstack/react-query";
 
 const fetchProduct = async (slug) => {
   const request = await fetch(
@@ -12,4 +13,8 @@ const fetchProduct = async (slug) => {
   return data;
 };
 
-export { fetchProduct };
+const useProduct = (slug) => {
+  return useQuery(["product"], () => fetchProduct(slug));
+};
+
+export { fetchProduct, useProduct };

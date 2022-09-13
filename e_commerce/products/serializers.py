@@ -1,3 +1,4 @@
+from itertools import product
 from rest_framework import serializers, pagination
 from rest_framework.response import Response
 

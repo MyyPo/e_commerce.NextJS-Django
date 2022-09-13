@@ -4,14 +4,25 @@ import stripe
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.http import Http404
-from django.shortcuts import render
+from rest_framework import generics
 
 from rest_framework import status, permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from authentication.mixins import StaffOrReadOnlyMixin
 
 from .models import Order, OrderItem
 from .serializers import OrderSerializer
+
+class UserOrders(StaffOrReadOnlyMixin, generics.ListAPIView):
+    serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return Order.objects.all()
+        else:
+            user = self.request.user
+            return Order.objects.filter(customer=user)
 
 @api_view(['POST'])
 @permission_classes([permissions.IsAuthenticated])

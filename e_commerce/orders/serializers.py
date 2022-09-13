@@ -4,10 +4,12 @@ from rest_framework import serializers
 from .models import Order, OrderItem
 
 from products.serializers import ProductSerializer
+from products.models import Product
 
 
 class OrderItemSerializer(serializers.ModelSerializer):
-    product = ProductSerializer
+    # product = ProductSerializer()
+    title = serializers.RelatedField( read_only=True)
 
     def validate(self, data, product):
         if data['quantity'] > product['quantity']:
@@ -19,6 +21,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = (
+            "title",
             'price',
             'product',
             'quantity',
@@ -28,6 +31,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
+    created_at = serializers.DateTimeField(format="%d-%m-%Y %H:%M")
 
     class Meta:
         model = Order
@@ -36,6 +40,7 @@ class OrderSerializer(serializers.ModelSerializer):
             "id",
             "first_name",
             "last_name",
+            "created_at",
             "email",
             "address",
             "zipcode",
