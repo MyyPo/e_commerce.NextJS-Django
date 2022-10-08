@@ -192,7 +192,7 @@ export default function Header() {
                   </div>
                 )}
 
-                {isBreakpoint && (
+                {session && isBreakpoint && (
                   <MobileCartButton
                     cartNotification={cartNotification}
                     setCartNotification={setCartNotification}
