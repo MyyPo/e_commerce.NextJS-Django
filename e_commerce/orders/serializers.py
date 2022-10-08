@@ -31,21 +31,21 @@ class OrderItemSerializer(serializers.ModelSerializer):
 
 class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True)
-    created_at = serializers.DateTimeField(format="%d-%m-%Y %H:%M")
+    # created_at = serializers.DateTimeField(format="%d-%m-%Y %H:%M")
 
     class Meta:
         model = Order
 
         fields = (
             "id",
-            "first_name",
-            "last_name",
+            # "first_name",
+            # "last_name",
             "created_at",
-            "email",
-            "address",
-            "zipcode",
-            "place",
-            "phone",
+            # "email",
+            # "address",
+            # "zipcode",
+            # "place",
+            # "phone",
             "stripe_token",
             "items",
             "paid_amount"

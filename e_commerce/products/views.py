@@ -21,13 +21,16 @@ class ProductListAPIViews(
     search_fields = ['^title']
 
     def get_queryset(self):
-        if not self.request.session.get('random_exp'):
-            self.request.session['random_exp']=random.randrange(0,RANDOM_EXPERIENCES)
-        product_list = cache.get('random_exp_%d' % self.request.session['random_exp'])
-        if not product_list:
-            product_list = list(Product.objects.all().order_by('?'))
-            cache.set('random_exp_%d' % self.request.session['random_exp'], product_list, 60*60*24)
+        product_list = Product.objects.all().order_by('-quantity')
         return product_list
+
+        # if not self.request.session.get('random_exp'):
+        #     self.request.session['random_exp']=random.randrange(0,RANDOM_EXPERIENCES)
+        # product_list = cache.get('random_exp_%d' % self.request.session['random_exp'])
+        # if not product_list:
+        #     product_list = list(Product.objects.all().order_by('?'))
+        #     cache.set('random_exp_%d' % self.request.session['random_exp'], product_list, 60*60*24)
+        # return product_list
        
 
 
